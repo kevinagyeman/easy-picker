@@ -1,46 +1,51 @@
 {
-  "name": "@kevinagyeman/wheel-picker",
-  "version": "1.0.0",
-  "description": "Wheel date picker component compatible with all frontend frameworks",
-  "type": "module",
-  "main": "./dist/wheel-picker.umd.js",
-  "module": "./dist/wheel-picker.js",
-  "types": "./dist/wheel-picker.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/wheel-picker.d.ts",
-      "import": "./dist/wheel-picker.js",
-      "require": "./dist/wheel-picker.umd.js"
-    },
-    "./dist/style.css": "./dist/style.css"
-  },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "wheel-picker",
-    "date-picker",
-    "vanilla-js",
-    "framework-agnostic",
-    "datepicker"
-  ],
-  "author": "",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kevinagyeman/wheel-picker.git"
-  },
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "prepublishOnly": "npm run build"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^4.7.0",
-    "rollup": "^4.53.3",
-    "typescript": "~5.9.3",
-    "vite": "^7.2.4",
-    "vite-plugin-dts": "^4.3.0"
-  }
+	"name": "@kevinagyeman/wheel-picker",
+	"version": "1.0.0",
+	"description": "Wheel date picker component compatible with all frontend frameworks",
+	"type": "module",
+	"main": "./dist/wheel-picker.umd.js",
+	"module": "./dist/wheel-picker.js",
+	"types": "./dist/wheel-picker.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/wheel-picker.d.ts",
+			"import": "./dist/wheel-picker.js",
+			"require": "./dist/wheel-picker.umd.js"
+		},
+		"./dist/style.css": "./dist/style.css"
+	},
+	"files": [
+		"dist"
+	],
+	"keywords": [
+		"wheel-picker",
+		"date-picker",
+		"vanilla-js",
+		"framework-agnostic",
+		"datepicker"
+	],
+	"author": "",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kevinagyeman/wheel-picker.git"
+	},
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"prepublishOnly": "npm run build",
+		"lint": "biome lint",
+		"lint:error": "biome lint --diagnostic-level=error",
+		"format": "biome format --write",
+		"check:fix": "biome check --write"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.3.8",
+		"@vitejs/plugin-react": "^4.7.0",
+		"rollup": "^4.53.3",
+		"typescript": "~5.9.3",
+		"vite": "^7.2.4",
+		"vite-plugin-dts": "^4.3.0"
+	}
 }
