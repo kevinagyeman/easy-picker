@@ -17,6 +17,10 @@
 	"files": [
 		"dist"
 	],
+	"sideEffects": [
+		"*.css",
+		"./dist/style.css"
+	],
 	"keywords": [
 		"easy-picker",
 		"date-picker",
@@ -26,8 +30,12 @@
 		"framework-agnostic",
 		"picker"
 	],
-	"author": "",
+	"author": "Kevin Agyeman <kevinagyemann@gmail.com>",
 	"license": "MIT",
+	"homepage": "https://github.com/kevinagyeman/easy-picker#readme",
+	"bugs": {
+		"url": "https://github.com/kevinagyeman/easy-picker/issues"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/kevinagyeman/easy-picker.git"
