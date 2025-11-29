@@ -160,6 +160,12 @@ interface EasyPickerOptions {
 
   // Locale for month names (default: 'en-US')
   locale?: string
+
+  // Custom CSS class for select elements (e.g., Tailwind classes)
+  selectClassName?: string
+
+  // Custom CSS class for wrapper elements
+  wrapperClassName?: string
 }
 ```
 
@@ -220,19 +226,42 @@ new EasyPicker({
 
 ## Styling
 
-The component comes with default styling, but you can customize it by overriding CSS variables or classes:
+### Using Framework CSS (Tailwind, Bootstrap, etc.)
+
+Pass custom classes via the `selectClassName` option:
+
+```typescript
+// Tailwind CSS
+new EasyPicker({
+  container: '#picker',
+  format: 'date',
+  selectClassName: 'px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500',
+  wrapperClassName: 'mx-2'
+})
+
+// Bootstrap
+new EasyPicker({
+  container: '#picker',
+  format: 'date',
+  selectClassName: 'form-select',
+  wrapperClassName: 'mb-3'
+})
+```
+
+### Custom CSS
+
+Override the default styles in your own CSS:
 
 ```css
-.wheel-picker {
-  /* Your custom styles */
+.easy-picker-select {
+  /* Your custom select styles */
+  border: 2px solid #0071e3;
+  border-radius: 12px;
 }
 
-.wheel-picker-item {
-  /* Customize individual items */
-}
-
-.wheel-picker-highlight {
-  /* Customize the selection highlight */
+.easy-picker-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
 }
 ```
 

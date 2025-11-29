@@ -1,71 +1,82 @@
 import EasyPicker from "./easy-picker";
 
+// Helper function to update date output
+const updateDateOutput = (date: Date) => {
+	const output = document.getElementById("date-output");
+	if (output) {
+		output.innerHTML = `<strong>Selected:</strong> ${date.toLocaleDateString(
+			"en-US",
+			{
+				weekday: "long",
+				year: "numeric",
+				month: "long",
+				day: "numeric",
+			},
+		)}`;
+	}
+};
+
 // Date Picker
 const datePicker = new EasyPicker({
 	container: "#date-picker",
 	format: "date",
 	initialDate: new Date(),
-	onChange: (date) => {
-		const output = document.getElementById("date-output");
-		if (output) {
-			output.innerHTML = `<strong>Selected:</strong> ${date.toLocaleDateString(
-				"en-US",
-				{
-					weekday: "long",
-					year: "numeric",
-					month: "long",
-					day: "numeric",
-				},
-			)}`;
-		}
-	},
+	onChange: updateDateOutput,
 });
 
-// Trigger initial display
-datePicker.setDate(new Date());
+// Display initial date
+updateDateOutput(datePicker.getDate());
+
+// Helper function to update datetime output
+const updateDateTimeOutput = (date: Date) => {
+	const output = document.getElementById("datetime-output");
+	if (output) {
+		output.innerHTML = `<strong>Selected:</strong> ${date.toLocaleString(
+			"en-US",
+			{
+				weekday: "long",
+				year: "numeric",
+				month: "long",
+				day: "numeric",
+				hour: "2-digit",
+				minute: "2-digit",
+			},
+		)}`;
+	}
+};
 
 // DateTime Picker
 const dateTimePicker = new EasyPicker({
 	container: "#datetime-picker",
 	format: "datetime",
 	initialDate: new Date(),
-	onChange: (date) => {
-		const output = document.getElementById("datetime-output");
-		if (output) {
-			output.innerHTML = `<strong>Selected:</strong> ${date.toLocaleString(
-				"en-US",
-				{
-					weekday: "long",
-					year: "numeric",
-					month: "long",
-					day: "numeric",
-					hour: "2-digit",
-					minute: "2-digit",
-				},
-			)}`;
-		}
-	},
+	onChange: updateDateTimeOutput,
 });
 
-dateTimePicker.setDate(new Date());
+// Display initial datetime
+updateDateTimeOutput(dateTimePicker.getDate());
+
+// Helper function to update time output
+const updateTimeOutput = (date: Date) => {
+	const output = document.getElementById("time-output");
+	if (output) {
+		output.innerHTML = `<strong>Selected:</strong> ${date.toLocaleTimeString(
+			"en-US",
+			{
+				hour: "2-digit",
+				minute: "2-digit",
+			},
+		)}`;
+	}
+};
 
 // Time Picker
 const timePicker = new EasyPicker({
 	container: "#time-picker",
 	format: "time",
 	initialDate: new Date(),
-	onChange: (date) => {
-		const output = document.getElementById("time-output");
-		if (output) {
-			output.innerHTML = `<strong>Selected:</strong> ${date.toLocaleTimeString(
-				"en-US",
-				{
-					hour: "2-digit",
-					minute: "2-digit",
-				},
-			)}`;
-		}
-	},
+	onChange: updateTimeOutput,
 });
 
-timePicker.setDate(new Date());
+// Display initial time
+updateTimeOutput(timePicker.getDate());

@@ -8,6 +8,8 @@ export interface EasyPickerOptions {
 	onChange?: (date: Date) => void;
 	format?: "date" | "datetime" | "time";
 	locale?: string;
+	selectClassName?: string;
+	wrapperClassName?: string;
 }
 
 export class EasyPicker {
@@ -38,6 +40,8 @@ export class EasyPicker {
 			onChange: options.onChange || (() => {}),
 			format: options.format || "date",
 			locale: options.locale || "en-US",
+			selectClassName: options.selectClassName || "",
+			wrapperClassName: options.wrapperClassName || "",
 		};
 
 		this.init();
@@ -137,14 +141,18 @@ export class EasyPicker {
 
 	private createSelect(name: string): HTMLSelectElement {
 		const select = document.createElement("select");
-		select.className = "easy-picker-select";
+		const baseClass = "easy-picker-select";
+		const customClass = this.options.selectClassName;
+		select.className = customClass ? `${baseClass} ${customClass}` : baseClass;
 		select.dataset.field = name;
 		return select;
 	}
 
 	private createSelectWrapper(select: HTMLSelectElement): HTMLElement {
 		const wrapper = document.createElement("div");
-		wrapper.className = "easy-picker-select-wrapper";
+		const baseClass = "easy-picker-select-wrapper";
+		const customClass = this.options.wrapperClassName;
+		wrapper.className = customClass ? `${baseClass} ${customClass}` : baseClass;
 		wrapper.appendChild(select);
 		return wrapper;
 	}
