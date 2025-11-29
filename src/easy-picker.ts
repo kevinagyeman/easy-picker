@@ -18,6 +18,7 @@ export class EasyPicker {
 	private picker: HTMLElement | null = null;
 	private currentDate: Date;
 	private selects: HTMLSelectElement[] = [];
+	private eventCleanup: Array<() => void> = [];
 
 	constructor(options: EasyPickerOptions) {
 		const containerElement =
@@ -195,7 +196,7 @@ export class EasyPicker {
 
 	private attachEvents(): void {
 		this.selects.forEach((select) => {
-			select.addEventListener("change", () => {
+			const handler = () => {
 				const { format } = this.options;
 
 				// Update day options when month or year changes
@@ -207,7 +208,12 @@ export class EasyPicker {
 				}
 
 				this.onDateChange();
-			});
+			};
+
+			select.addEventListener("change", handler);
+			this.eventCleanup.push(() =>
+				select.removeEventListener("change", handler),
+			);
 		});
 	}
 
@@ -264,6 +270,13 @@ export class EasyPicker {
 	}
 
 	public destroy(): void {
+		// Clean up event listeners first
+		for (const cleanup of this.eventCleanup) {
+			cleanup();
+		}
+		this.eventCleanup = [];
+
+		// Remove DOM elements
 		if (this.picker) {
 			this.container.removeChild(this.picker);
 			this.picker = null;
