@@ -41,11 +41,12 @@ const picker = new EasyPicker({
 ### React
 
 ```tsx
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import EasyPicker from '@kevinagyeman/easy-picker'
 import '@kevinagyeman/easy-picker/dist/style.css'
 
 function DatePickerComponent() {
+  const [date, setDate] = useState(new Date())
   const containerRef = useRef<HTMLDivElement>(null)
   const pickerRef = useRef<EasyPicker | null>(null)
 
@@ -54,10 +55,8 @@ function DatePickerComponent() {
       pickerRef.current = new EasyPicker({
         container: containerRef.current,
         format: 'date',
-        initialDate: new Date(),
-        onChange: (date) => {
-          console.log('Selected date:', date)
-        }
+        initialDate: date,
+        onChange: setDate
       })
     }
 
@@ -66,7 +65,17 @@ function DatePickerComponent() {
     }
   }, [])
 
-  return <div ref={containerRef}></div>
+  // Sync picker when external state changes
+  useEffect(() => {
+    pickerRef.current?.update(date)
+  }, [date])
+
+  return (
+    <div>
+      <div ref={containerRef}></div>
+      <button onClick={() => setDate(new Date())}>Reset to Today</button>
+    </div>
+  )
 }
 ```
 
@@ -184,6 +193,24 @@ Programmatically sets the picker to a specific date.
 ```typescript
 picker.setDate(new Date(2025, 5, 15))
 ```
+
+#### `update(date: Date): void`
+Updates the picker's date from external state (e.g., form state). Unlike `setDate()`, this is designed for syncing with external state and won't trigger `onChange`.
+
+```typescript
+// Perfect for form integration
+const formState = { date: new Date() };
+picker.update(formState.date);
+```
+
+**Use `update()` when:**
+- Syncing with form/component state
+- Resetting the picker
+- Responding to external state changes
+
+**Use `setDate()` when:**
+- Programmatically changing the date
+- Initial setup
 
 #### `destroy(): void`
 Removes the picker from the DOM and cleans up event listeners.

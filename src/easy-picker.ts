@@ -249,9 +249,7 @@ export class EasyPicker {
 		return this.currentDate;
 	}
 
-	public setDate(date: Date): void {
-		this.currentDate = date;
-
+	private updateSelectsFromDate(date: Date): void {
 		const { format } = this.options;
 
 		if (format === "date" || format === "datetime") {
@@ -267,6 +265,17 @@ export class EasyPicker {
 			this.selects[0].value = String(date.getHours());
 			this.selects[1].value = String(date.getMinutes());
 		}
+	}
+
+	public setDate(date: Date): void {
+		this.currentDate = date;
+		this.updateSelectsFromDate(date);
+	}
+
+	public update(date: Date): void {
+		this.currentDate = date;
+		this.updateSelectsFromDate(date);
+		// Note: Doesn't trigger onChange - used for external state sync
 	}
 
 	public destroy(): void {
