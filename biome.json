@@ -15,7 +15,19 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"recommended": true,
+			"style": {
+				"useNodejsImportProtocol": "off"
+			},
+			"correctness": {
+				"useParseIntRadix": "off"
+			}
+		}
+	},
+	"html": {
+		"formatter": {
+			"enabled": true,
+			"indentStyle": "tab"
 		}
 	},
 	"javascript": {
