@@ -162,7 +162,7 @@ interface EasyPickerOptions {
   maxDate?: Date
 
   // Callback fired when date changes
-  onChange?: (date: Date) => void
+  onChange?: (value: Date | string | number) => void
 
   // Picker format: 'date', 'datetime', or 'time'
   format?: 'date' | 'datetime' | 'time'
@@ -175,16 +175,33 @@ interface EasyPickerOptions {
 
   // Custom CSS class for wrapper elements
   wrapperClassName?: string
+
+  // Return format for date values (default: 'date')
+  // 'date' - JavaScript Date object
+  // 'iso' - ISO 8601 string (e.g., "2025-03-15T12:00:00.000Z")
+  // 'timestamp' - Unix timestamp in milliseconds
+  // 'date-string' - Date-only string (e.g., "2025-03-15")
+  returnFormat?: 'date' | 'iso' | 'timestamp' | 'date-string'
 }
 ```
 
 ### Methods
 
-#### `getDate(): Date`
-Returns the currently selected date.
+#### `getDate(): Date | string | number`
+Returns the currently selected date in the format specified by `returnFormat`.
 
 ```typescript
 const currentDate = picker.getDate()
+// Returns Date object by default
+// Or ISO string, timestamp, or date-string based on returnFormat option
+```
+
+#### `getRawDate(): Date`
+Always returns the current date as a JavaScript Date object, regardless of `returnFormat`.
+
+```typescript
+const rawDate = picker.getRawDate()
+// Always returns a Date object
 ```
 
 #### `setDate(date: Date): void`
@@ -250,6 +267,63 @@ new EasyPicker({
   format: 'time'
 })
 ```
+
+## Return Formats
+
+Control how date values are returned in the `onChange` callback and `getDate()` method:
+
+### Date Object (default)
+```typescript
+new EasyPicker({
+  container: '#picker',
+  format: 'date',
+  returnFormat: 'date', // default
+  onChange: (date) => {
+    console.log(date) // Date object: Mon Mar 15 2025 12:00:00 GMT...
+  }
+})
+```
+
+### ISO String
+```typescript
+new EasyPicker({
+  container: '#picker',
+  format: 'date',
+  returnFormat: 'iso',
+  onChange: (isoString) => {
+    console.log(isoString) // "2025-03-15T12:00:00.000Z"
+    // Perfect for APIs and databases
+  }
+})
+```
+
+### Unix Timestamp
+```typescript
+new EasyPicker({
+  container: '#picker',
+  format: 'date',
+  returnFormat: 'timestamp',
+  onChange: (timestamp) => {
+    console.log(timestamp) // 1710504000000
+    // Number of milliseconds since Unix epoch
+  }
+})
+```
+
+### Date String (YYYY-MM-DD)
+```typescript
+new EasyPicker({
+  container: '#picker',
+  format: 'date',
+  returnFormat: 'date-string',
+  onChange: (dateString) => {
+    console.log(dateString) // "2025-03-15"
+    // Perfect for HTML input type="date" or simple date storage
+  }
+})
+```
+
+**Note:** When using `format: 'date'`, dates are set to noon (12:00) to prevent timezone-related issues where the date shifts by one day when converted between timezones.
 
 ## Styling
 

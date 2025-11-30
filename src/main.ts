@@ -1,10 +1,12 @@
 import EasyPicker from "./easy-picker";
 
 // Helper function to update date output
-const updateDateOutput = (date: Date) => {
+const updateDateOutput = (date: Date | string | number) => {
 	const output = document.getElementById("date-output");
 	if (output) {
-		output.innerHTML = `<strong>Selected:</strong> ${date.toLocaleDateString(
+		// Convert to Date if not already
+		const dateObj = date instanceof Date ? date : new Date(date);
+		output.innerHTML = `<strong>Selected:</strong> ${dateObj.toLocaleDateString(
 			"en-US",
 			{
 				weekday: "long",
@@ -25,13 +27,14 @@ const datePicker = new EasyPicker({
 });
 
 // Display initial date
-updateDateOutput(datePicker.getDate());
+updateDateOutput(datePicker.getRawDate());
 
 // Helper function to update datetime output
-const updateDateTimeOutput = (date: Date) => {
+const updateDateTimeOutput = (date: Date | string | number) => {
 	const output = document.getElementById("datetime-output");
 	if (output) {
-		output.innerHTML = `<strong>Selected:</strong> ${date.toLocaleString(
+		const dateObj = date instanceof Date ? date : new Date(date);
+		output.innerHTML = `<strong>Selected:</strong> ${dateObj.toLocaleString(
 			"en-US",
 			{
 				weekday: "long",
@@ -54,13 +57,14 @@ const dateTimePicker = new EasyPicker({
 });
 
 // Display initial datetime
-updateDateTimeOutput(dateTimePicker.getDate());
+updateDateTimeOutput(dateTimePicker.getRawDate());
 
 // Helper function to update time output
-const updateTimeOutput = (date: Date) => {
+const updateTimeOutput = (date: Date | string | number) => {
 	const output = document.getElementById("time-output");
 	if (output) {
-		output.innerHTML = `<strong>Selected:</strong> ${date.toLocaleTimeString(
+		const dateObj = date instanceof Date ? date : new Date(date);
+		output.innerHTML = `<strong>Selected:</strong> ${dateObj.toLocaleTimeString(
 			"en-US",
 			{
 				hour: "2-digit",
@@ -79,4 +83,4 @@ const timePicker = new EasyPicker({
 });
 
 // Display initial time
-updateTimeOutput(timePicker.getDate());
+updateTimeOutput(timePicker.getRawDate());

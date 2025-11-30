@@ -5,11 +5,12 @@ export interface EasyPickerOptions {
 	initialDate?: Date;
 	minDate?: Date;
 	maxDate?: Date;
-	onChange?: (date: Date) => void;
+	onChange?: (value: Date | string | number) => void;
 	format?: "date" | "datetime" | "time";
 	locale?: string;
 	selectClassName?: string;
 	wrapperClassName?: string;
+	returnFormat?: "date" | "iso" | "timestamp" | "date-string";
 }
 
 export class EasyPicker {
@@ -43,6 +44,7 @@ export class EasyPicker {
 			locale: options.locale || "en-US",
 			selectClassName: options.selectClassName || "",
 			wrapperClassName: options.wrapperClassName || "",
+			returnFormat: options.returnFormat || "date",
 		};
 
 		this.init();
@@ -217,6 +219,22 @@ export class EasyPicker {
 		});
 	}
 
+	private formatDateValue(date: Date): Date | string | number {
+		const { returnFormat } = this.options;
+
+		switch (returnFormat) {
+			case "iso":
+				return date.toISOString();
+			case "timestamp":
+				return date.getTime();
+			case "date-string":
+				return date.toISOString().split("T")[0];
+			case "date":
+			default:
+				return date;
+		}
+	}
+
 	private onDateChange(): void {
 		const { format } = this.options;
 		let newDate: Date;
@@ -231,7 +249,8 @@ export class EasyPicker {
 				const minute = parseInt(this.selects[4].value);
 				newDate = new Date(year, month, day, hour, minute);
 			} else {
-				newDate = new Date(year, month, day);
+				// Set to noon to avoid timezone shifting issues
+				newDate = new Date(year, month, day, 12, 0, 0, 0);
 			}
 		} else {
 			// time format
@@ -242,10 +261,14 @@ export class EasyPicker {
 		}
 
 		this.currentDate = newDate;
-		this.options.onChange(newDate);
+		this.options.onChange(this.formatDateValue(newDate));
 	}
 
-	public getDate(): Date {
+	public getDate(): Date | string | number {
+		return this.formatDateValue(this.currentDate);
+	}
+
+	public getRawDate(): Date {
 		return this.currentDate;
 	}
 
